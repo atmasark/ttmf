@@ -5,8 +5,12 @@ import Home from "../components/Home"
 import SEO from "../components/seo"
 
 const Wrapper = styled.div`
-  width: 100%;
   height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
 
 const IndexPage = () => {
