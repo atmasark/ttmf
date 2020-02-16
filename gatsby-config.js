@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `The Trippy Motherfuckers`,
-    description: `The trippy website for The Trippy Motherfuckers`,
+    description: `Trippy website of The Trippy Motherfuckers`,
     author: `The Trippy Motherfuckers`,
   },
   plugins: [
