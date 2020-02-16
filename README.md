@@ -78,7 +78,7 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 - **`/src/layout`**: This is a higher level layout file, which connects global styles and style related files on the application.
 
-- **`/src/pages`**: The pages are set here.
+- **`/src/pages`**: The pages are set here. To add a new page, just add a new .jsx file here.
 
 - **`/src/styles`**: Global styles should be set here, more precisely in `/src/styles/styles.css`.
 
