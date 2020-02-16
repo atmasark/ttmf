@@ -5,7 +5,6 @@ import "../styles/styles.css"
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-around;
 `
 
 const Layout = ({ children }) => {

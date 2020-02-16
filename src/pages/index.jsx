@@ -1,28 +1,32 @@
 import React from "react"
-import { Link } from "gatsby"
 import styled from "styled-components"
-
 import Layout from "../layout/index"
-import Image from "../components/image"
+import Home from "../components/Home"
 import SEO from "../components/seo"
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
 `
-const IndexPage = () => (
-  <Layout>
-    <Wrapper>
-      <SEO title="Home" />
-      <h1>Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        <Image />
-      </div>
-      <Link to="/page-2/">Go to page 2</Link>
-    </Wrapper>
-  </Layout>
-)
+
+const IndexPage = () => {
+  if (typeof window !== "undefined") {
+    let vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty("--vh", `${vh}px`)
+    window.addEventListener("resize", () => {
+      let vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty("--vh", `${vh}px`)
+    })
+  }
+
+  return (
+    <Layout>
+      <Wrapper>
+        <SEO title="Home" />
+        <Home />
+      </Wrapper>
+    </Layout>
+  )
+}
 
 export default IndexPage
