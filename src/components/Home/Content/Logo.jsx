@@ -1,6 +1,6 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
-import image from "../../images/ttm_logo_rgb.png"
+import image from "../../../images/ttm_logo_rgb.png"
 
 const colorRotate = keyframes`
   100% {
