@@ -6,18 +6,18 @@ const colorRotate = keyframes`
   100% {
     -webkit-filter: hue-rotate(360deg);
   }
-`
+  `
 
 const scaleAndSpin = randDeg => keyframes`
   0% { transform: scale(1) rotate(0deg); }
-  45% { transform: scale(1.05) rotate(${randDeg}deg); }
-  55% { transform: scale(1.049) rotate(${randDeg - 0.01}deg); }
-`
+  45% { transform: scale(1.1) rotate(${randDeg}deg); }
+  `
+
+const randomizeDeg = () => (Math.random() < 0.5 ? -1 : 1) * Math.random() * 5
 
 const Image = styled.img`
   animation: ${colorRotate} 5s linear infinite,
-    ${scaleAndSpin((Math.random() < 0.5 ? -1 : 1) * Math.random() * 5)} 20s
-      linear infinite;
+    ${scaleAndSpin(randomizeDeg())} 20s ease-in-out infinite;
   height: 50vh;
 `
 
