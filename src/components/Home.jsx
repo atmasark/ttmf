@@ -15,7 +15,7 @@ export default () => {
   return (
     <Wrapper>
       <Background />
-      <Content />
+      {/* <Content /> */}
     </Wrapper>
   )
 }
