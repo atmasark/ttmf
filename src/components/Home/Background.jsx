@@ -18,7 +18,6 @@ const initPixi = () => {
     width: document.getElementById("canvasContainer").offsetWidth,
     height: document.getElementById("canvasContainer").offsetHeight,
     autoResize: true,
-    resolution: devicePixelRatio,
     forceFXAA: true,
     powerPreference: "high-performance",
     backgroundColor: 0x1099bb,
@@ -26,7 +25,9 @@ const initPixi = () => {
   document.getElementById("canvasContainer").appendChild(renderer.view)
 
   let stage = new PIXI.Container()
-
+  let hueCounter = 0
+  const colorMatrix = new PIXI.filters.ColorMatrixFilter()
+  stage.filters = [colorMatrix]
   let ticker = new PIXI.Ticker()
   ticker.add(() => {
     renderer.render(stage)
@@ -49,6 +50,11 @@ const initPixi = () => {
     stage.addChild(sprite)
     ticker.add(delta => {
       sprite.rotation += 0.01 * delta
+      hueCounter += 0.001
+      if (hueCounter > 360) {
+        hueCounter = 0
+      }
+      colorMatrix.hue(hueCounter)
     })
   }
 }
