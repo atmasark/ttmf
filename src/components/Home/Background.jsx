@@ -48,8 +48,8 @@ const initPixi = PIXI => {
     sprite.y = Math.floor(i / parentWidth) * 64 + 32
     stage.addChild(sprite)
     ticker.add(delta => {
-      if (i % 2) sprite.rotation += Math.random() * 0.1 * delta
-      else sprite.rotation -= Math.random() * 0.1 * delta
+      if (i % 2) sprite.rotation += 0.01 * delta
+      else sprite.rotation -= 0.01 * delta
       hueCounter += 0.001
       if (hueCounter > 360) {
         hueCounter = 0
