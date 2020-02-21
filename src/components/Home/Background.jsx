@@ -19,6 +19,8 @@ const initPixi = () => {
     height: document.getElementById("canvasContainer").offsetHeight,
     autoResize: true,
     resolution: devicePixelRatio,
+    forceFXAA: true,
+    powerPreference: "high-performance",
     backgroundColor: 0x1099bb,
   })
   document.getElementById("canvasContainer").appendChild(renderer.view)
