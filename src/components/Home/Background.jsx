@@ -22,6 +22,7 @@ const initPixi = () => {
     backgroundColor: 0x1099bb,
   })
   document.getElementById("canvasContainer").appendChild(renderer.view)
+
   let stage = new PIXI.Container()
 
   let ticker = new PIXI.Ticker()
@@ -29,7 +30,6 @@ const initPixi = () => {
     renderer.render(stage)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
-
   const texture = PIXI.Texture.from(gear)
   const parentHeight =
     Math.round(document.getElementById("canvasContainer").offsetHeight / 64) + 1
@@ -42,10 +42,10 @@ const initPixi = () => {
     sprite.anchor.set(0.5)
     sprite.scale.x = 0.125
     sprite.scale.y = 0.125
-    sprite.x = (i % parentWidth) * 64 + 16
-    sprite.y = Math.floor(i / (parentHeight * 2)) * 64 + 42
+    sprite.x = (i % parentWidth) * 64 + 32
+    sprite.y = Math.floor(i / parentWidth) * 64 + 32
     stage.addChild(sprite)
-    ticker.add(function(delta) {
+    ticker.add(delta => {
       sprite.rotation += 0.01 * delta
     })
   }
