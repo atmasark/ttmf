@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import * as PIXI from "pixi.js"
+// import * as PIXI from "pixi.js"
 import gear from "../../images/gear.png"
 
 const Wrapper = styled.div`
