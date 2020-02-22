@@ -19,11 +19,11 @@ const initPixi = PIXI => {
     autoResize: true,
     forceFXAA: true,
     powerPreference: "high-performance",
-    backgroundColor: 0x1099bb,
+    transparent: true,
   })
   document.getElementById("canvasContainer").appendChild(renderer.view)
-
   let stage = new PIXI.Container()
+
   let hueCounter = 0
   const colorMatrix = new PIXI.filters.ColorMatrixFilter()
   stage.filters = [colorMatrix]
@@ -32,6 +32,7 @@ const initPixi = PIXI => {
     renderer.render(stage)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
+
   const texture = PIXI.Texture.from(gear)
   const parentHeight =
     Math.round(document.getElementById("canvasContainer").offsetHeight / 64) + 1
@@ -42,19 +43,24 @@ const initPixi = PIXI => {
   for (let i = 0; i < parentHeight * parentWidth; i++) {
     let sprite = PIXI.Sprite.from(texture)
     sprite.anchor.set(0.5)
-    sprite.scale.x = 0.125
-    sprite.scale.y = 0.125
     sprite.x = (i % parentWidth) * 64 + 32
     sprite.y = Math.floor(i / parentWidth) * 64 + 32
     stage.addChild(sprite)
+    let scaleCount = 0
     ticker.add(delta => {
       if (i % 2) sprite.rotation += 0.01 * delta
       else sprite.rotation -= 0.01 * delta
+
       hueCounter += 0.001
       if (hueCounter > 360) {
         hueCounter = 0
       }
       colorMatrix.hue(hueCounter)
+
+      scaleCount += 0.0075
+      const scaleAmount = Math.sin(scaleCount)
+      sprite.scale.x = 0.225 * scaleAmount
+      sprite.scale.y = 0.225 * scaleAmount
     })
   }
 }
