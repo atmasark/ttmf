@@ -2,7 +2,11 @@ import React, { useEffect } from "react"
 import styled from "styled-components"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import getParentSize from "../../utils/getParentSize"
-import { getSpriteSettings } from "./Background/setup"
+import {
+  getSpriteInitSettings,
+  getSpriteTickerSettings,
+  getAmountOfSprites,
+} from "./Background/setup"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -47,33 +51,30 @@ const initPixi = (PIXI, parent) => {
     colorMatrix.hue(hueCounter)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
-  // Create a grid of sprites
-  for (let i = 0; i < (parent.height / 64 + 1) * (parent.width / 64 + 1); i++) {
-    const spriteSettings = getSpriteSettings(PIXI, i, parent)
-    console.log(spriteSettings)
-    let sprite = PIXI.Sprite.from(spriteSettings.init.texture)
-    sprite.anchor.set(spriteSettings.init.anchor)
-    sprite.scale.x = spriteSettings.init.scale.x
-    sprite.scale.y = spriteSettings.init.scale.y
-    sprite.x = spriteSettings.init.x
-    sprite.y = spriteSettings.init.y
-    sprite.blendMode = spriteSettings.init.blendMode
-    stage.addChild(sprite)
-    let scaleCount = 0
-    let alphaCount = 0
-    ticker.add(delta => {
-      if (i % 2) sprite.rotation += 0.01 * delta
-      else sprite.rotation -= 0.01 * delta
 
-      alphaCount += 0.001
-      const alphaAmount = Math.sin(alphaCount)
-      sprite.alpha = 0.03 + 0.01 * alphaAmount
-      scaleCount += 0.0075
-      const scaleAmount = 0.02 * Math.sin(scaleCount)
-      if (scaleAmount > 0.225) {
-        sprite.scale.x = scaleAmount
-        sprite.scale.y = scaleAmount
-      }
+  // Create a grid of sprites
+  for (let i = 0; i < getAmountOfSprites(parent); i++) {
+    let counters = {
+      scale: 0,
+      alpha: 0,
+    }
+    const init = getSpriteInitSettings(PIXI, i, parent)["default"]
+    let sprite = PIXI.Sprite.from(init.texture)
+    sprite.anchor.set(init.anchor)
+    sprite.scale.x = init.scale.x
+    sprite.scale.y = init.scale.y
+    sprite.x = init.x
+    sprite.y = init.y
+    sprite.blendMode = init.blendMode
+    stage.addChild(sprite)
+    ticker.add(delta => {
+      const tickerSettings = getSpriteTickerSettings(i, counters)["default"]
+      counters.alpha += tickerSettings.counterAddition.alpha
+      counters.scale += tickerSettings.counterAddition.scale
+      sprite.rotation += tickerSettings.rotation * delta
+      sprite.alpha = tickerSettings.alpha
+      sprite.scale.x = tickerSettings.scale.x || init.scale.x
+      sprite.scale.y = tickerSettings.scale.y || init.scale.y
     })
   }
 }
