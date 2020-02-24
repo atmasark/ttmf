@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import gear from "../../images/gear.png"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import getParentSize from "../../utils/getParentSize"
+import { getSpriteSettings } from "./Background/setup"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -47,16 +47,17 @@ const initPixi = (PIXI, parent) => {
     colorMatrix.hue(hueCounter)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
-
   // Create a grid of sprites
   for (let i = 0; i < (parent.height / 64 + 1) * (parent.width / 64 + 1); i++) {
-    let sprite = PIXI.Sprite.from(gear)
-    sprite.anchor.set(0.5)
-    sprite.scale.x = 0.225
-    sprite.scale.y = 0.225
-    sprite.x = (i % (parent.width / 64 + 1)) * 64 + 32
-    sprite.y = Math.floor(i / (parent.width / 64 + 1)) * 64 + 32
-    sprite.blendMode = PIXI.BLEND_MODES.ADD
+    const spriteSettings = getSpriteSettings(PIXI, i, parent)
+    console.log(spriteSettings)
+    let sprite = PIXI.Sprite.from(spriteSettings.init.texture)
+    sprite.anchor.set(spriteSettings.init.anchor)
+    sprite.scale.x = spriteSettings.init.scale.x
+    sprite.scale.y = spriteSettings.init.scale.y
+    sprite.x = spriteSettings.init.x
+    sprite.y = spriteSettings.init.y
+    sprite.blendMode = spriteSettings.init.blendMode
     stage.addChild(sprite)
     let scaleCount = 0
     let alphaCount = 0
