@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import styled from "styled-components"
 import gear from "../../images/gear.png"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
+import getParentSize from "../../utils/getParentSize"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -13,10 +14,10 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const initPixi = PIXI => {
+const initPixi = (PIXI, parent) => {
   let renderer = new PIXI.Renderer({
-    width: document.getElementById("canvasContainer").offsetWidth,
-    height: document.getElementById("canvasContainer").offsetHeight,
+    width: parent.width,
+    height: parent.height,
     autoResize: true,
     forceFXAA: true,
     powerPreference: "high-performance",
@@ -27,8 +28,8 @@ const initPixi = PIXI => {
   let bgSprite = PIXI.Sprite.from(closeUpLeaf)
 
   bgSprite.anchor.set(0.5)
-  bgSprite.x = document.getElementById("canvasContainer").offsetWidth / 2
-  bgSprite.y = document.getElementById("canvasContainer").offsetHeight / 2
+  bgSprite.x = parent.width / 2
+  bgSprite.y = parent.height / 2
   let bgSpriteScale = 0.4
   bgSprite.scale.set(0.4)
   stage.addChild(bgSprite)
@@ -42,18 +43,14 @@ const initPixi = PIXI => {
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
 
-  const texture = PIXI.Texture.from(gear)
-  const parentHeight =
-    Math.round(document.getElementById("canvasContainer").offsetHeight / 64) + 1
-  const parentWidth =
-    Math.round(document.getElementById("canvasContainer").offsetWidth / 64) + 1
-
   // Create a grid of sprites
-  for (let i = 0; i < parentHeight * parentWidth; i++) {
-    let sprite = PIXI.Sprite.from(texture)
+  for (let i = 0; i < (parent.height / 64 + 1) * (parent.width / 64 + 1); i++) {
+    let sprite = PIXI.Sprite.from(gear)
     sprite.anchor.set(0.5)
-    sprite.x = (i % parentWidth) * 64 + 32
-    sprite.y = Math.floor(i / parentWidth) * 64 + 32
+    sprite.scale.x = 0.225
+    sprite.scale.y = 0.225
+    sprite.x = (i % (parent.width / 64 + 1)) * 64 + 32
+    sprite.y = Math.floor(i / (parent.width / 64 + 1)) * 64 + 32
     sprite.blendMode = PIXI.BLEND_MODES.ADD
     stage.addChild(sprite)
     let scaleCount = 0
@@ -61,6 +58,7 @@ const initPixi = PIXI => {
     ticker.add(delta => {
       if (i % 2) sprite.rotation += 0.01 * delta
       else sprite.rotation -= 0.01 * delta
+
       alphaCount += 0.001
       hueCounter += 0.001
       if (hueCounter > 360) {
@@ -68,20 +66,23 @@ const initPixi = PIXI => {
       }
       colorMatrix.hue(hueCounter)
       const alphaAmount = Math.sin(alphaCount)
-      sprite.alpha = 0.005 + 0.1 * alphaAmount
+      sprite.alpha = 0.03 + 0.01 * alphaAmount
       scaleCount += 0.0075
-      const scaleAmount = Math.sin(scaleCount)
-      sprite.scale.x = 0.225 * scaleAmount
-      sprite.scale.y = 0.225 * scaleAmount
+      const scaleAmount = 0.02 * Math.sin(scaleCount)
+      if (scaleAmount > 0.225) {
+        sprite.scale.x = scaleAmount
+        sprite.scale.y = scaleAmount
+      }
     })
   }
 }
 export default () => {
+  const id = "canvasContainer"
   useEffect(() => {
     // Pixi imported here to prevent
     // Fail while deploying
     const PIXI = require("pixi.js")
-    initPixi(PIXI)
+    initPixi(PIXI, getParentSize(id))
   }, [])
-  return <Wrapper id={"canvasContainer"}></Wrapper>
+  return <Wrapper id={id}></Wrapper>
 }
