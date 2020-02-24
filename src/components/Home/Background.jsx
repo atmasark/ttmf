@@ -33,13 +33,18 @@ const initPixi = (PIXI, parent) => {
   let bgSpriteScale = 0.4
   bgSprite.scale.set(0.4)
   stage.addChild(bgSprite)
-  let hueCounter = 0
+  let hueCounter = Math.round(Math.random() * 360)
   const colorMatrix = new PIXI.filters.ColorMatrixFilter()
   stage.filters = [colorMatrix]
   let ticker = new PIXI.Ticker()
   ticker.add(() => {
     renderer.render(stage)
     bgSprite.scale.set((bgSpriteScale += 0.0001))
+    hueCounter += 0.1
+    if (hueCounter > 360) {
+      hueCounter = 0
+    }
+    colorMatrix.hue(hueCounter)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
 
@@ -60,11 +65,6 @@ const initPixi = (PIXI, parent) => {
       else sprite.rotation -= 0.01 * delta
 
       alphaCount += 0.001
-      hueCounter += 0.001
-      if (hueCounter > 360) {
-        hueCounter = 0
-      }
-      colorMatrix.hue(hueCounter)
       const alphaAmount = Math.sin(alphaCount)
       sprite.alpha = 0.03 + 0.01 * alphaAmount
       scaleCount += 0.0075
