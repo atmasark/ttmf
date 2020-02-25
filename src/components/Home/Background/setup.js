@@ -1,16 +1,41 @@
 import gear from "../../../images/gear.png"
 import closeUpLeaf from "../../../images/close-up-of-leaf.jpg"
+import moth from "../../../images/white-brown-and-orange-moth.jpg"
 
-export const getBackgroundSettings = parent => ({
-  default: {
+const defaultBgPosition = parent => ({
+  anchor: 0.5,
+  x: parent.width / 2,
+  y: parent.height / 2,
+})
+
+const backgroundSettings = parent => [
+  {
     texture: closeUpLeaf,
-    anchor: 0.5,
-    x: parent.width / 2,
-    y: parent.height / 2,
     scale: 0.4,
     scaleAddition: 0.0001,
+    random: {
+      x: Math.random() > 0.5 ? Math.random() * 50 : Math.random * -50,
+      y: Math.random() > 0.5 ? Math.random() * 50 : Math.random * -50,
+    },
+    ...defaultBgPosition(parent),
   },
-})
+  {
+    texture: moth,
+    scale: 0.3,
+    scaleAddition: 0.00005,
+    random: {
+      x: Math.random() > 0.5 ? Math.random() * 50 : Math.random * -50,
+      y: Math.random() > 0.5 ? Math.random() * 50 : Math.random * -50,
+    },
+    ...defaultBgPosition(parent),
+  },
+]
+
+export const getBackgroundSettings = parent =>
+  backgroundSettings(parent)[
+    Math.floor(Math.random() * backgroundSettings(parent).length)
+  ]
+
 export const getAmountOfSprites = parent =>
   (parent.height / 64 + 1) * (parent.width / 64 + 1)
 
