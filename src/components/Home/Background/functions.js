@@ -1,4 +1,8 @@
-import { getSpriteInitSettings, getSpriteTickerSettings } from "./setup"
+import {
+  getSpriteInitSettings,
+  getSpriteTickerSettings,
+  getBackgroundSettings,
+} from "./setup"
 
 export const createSprite = (PIXI, i, parent, ticker, stage, type) => {
   let counters = {
@@ -22,5 +26,20 @@ export const createSprite = (PIXI, i, parent, ticker, stage, type) => {
     sprite.alpha = tickerSettings.alpha
     sprite.scale.x = tickerSettings.scale.x || init.scale.x
     sprite.scale.y = tickerSettings.scale.y || init.scale.y
+  })
+}
+
+export const createBackground = (PIXI, type, parent, stage, ticker) => {
+  const settings = getBackgroundSettings(parent)[type]
+  let bgSprite = PIXI.Sprite.from(settings.texture)
+
+  bgSprite.anchor.set(settings.anchor)
+  bgSprite.x = settings.x
+  bgSprite.y = settings.y
+  let bgSpriteScale = settings.scale
+  bgSprite.scale.set(bgSpriteScale)
+  stage.addChild(bgSprite)
+  ticker.add(() => {
+    bgSprite.scale.set((bgSpriteScale += settings.scaleAddition))
   })
 }

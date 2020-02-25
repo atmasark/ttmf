@@ -1,5 +1,16 @@
 import gear from "../../../images/gear.png"
+import closeUpLeaf from "../../../images/close-up-of-leaf.jpg"
 
+export const getBackgroundSettings = parent => ({
+  default: {
+    texture: closeUpLeaf,
+    anchor: 0.5,
+    x: parent.width / 2,
+    y: parent.height / 2,
+    scale: 0.4,
+    scaleAddition: 0.0001,
+  },
+})
 export const getAmountOfSprites = parent =>
   (parent.height / 64 + 1) * (parent.width / 64 + 1)
 

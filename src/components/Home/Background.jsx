@@ -1,9 +1,8 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import getParentSize from "../../utils/getParentSize"
 import { getAmountOfSprites } from "./Background/setup"
-import { createSprite } from "./Background/functions"
+import { createSprite, createBackground } from "./Background/functions"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -27,21 +26,13 @@ const initPixi = (PIXI, parent) => {
   })
   document.getElementById("canvasContainer").appendChild(renderer.view)
   let stage = new PIXI.Container()
-  let bgSprite = PIXI.Sprite.from(closeUpLeaf)
 
-  bgSprite.anchor.set(0.5)
-  bgSprite.x = parent.width / 2
-  bgSprite.y = parent.height / 2
-  let bgSpriteScale = 0.4
-  bgSprite.scale.set(0.4)
-  stage.addChild(bgSprite)
   let hueCounter = Math.round(Math.random() * 360)
   const colorMatrix = new PIXI.filters.ColorMatrixFilter()
   stage.filters = [colorMatrix]
   let ticker = new PIXI.Ticker()
   ticker.add(() => {
     renderer.render(stage)
-    bgSprite.scale.set((bgSpriteScale += 0.0001))
     hueCounter += 0.1
     if (hueCounter > 360) {
       hueCounter = 0
@@ -49,6 +40,8 @@ const initPixi = (PIXI, parent) => {
     colorMatrix.hue(hueCounter)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
+
+  createBackground(PIXI, type, parent, stage, ticker)
 
   // Create a grid of sprites
   for (let i = 0; i < getAmountOfSprites(parent); i++) {
