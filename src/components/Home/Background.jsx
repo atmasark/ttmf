@@ -3,6 +3,8 @@ import styled from "styled-components"
 import getParentSize from "../../utils/getParentSize"
 import { getAmountOfSprites } from "./Background/setup"
 import { createSprite, createBackground } from "./Background/functions"
+import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
+import moth from "../../images/white-brown-and-orange-moth.jpg"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -14,7 +16,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const initPixi = (PIXI, parent) => {
+const initPixi = (PIXI, parent, resources) => {
   let type = "default"
   let renderer = new PIXI.Renderer({
     width: parent.width,
@@ -41,7 +43,7 @@ const initPixi = (PIXI, parent) => {
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
 
-  createBackground(PIXI, type, parent, stage, ticker)
+  createBackground(PIXI, type, parent, stage, ticker, resources)
 
   // Create a grid of sprites
   for (let i = 0; i < getAmountOfSprites(parent); i++) {
@@ -54,7 +56,12 @@ export default () => {
     // Pixi imported here to prevent
     // Fail while deploying
     const PIXI = require("pixi.js")
-    initPixi(PIXI, getParentSize(id))
+    const loader = new PIXI.Loader()
+    loader.add("closeUpLeaf", closeUpLeaf)
+    loader.add("moth", moth)
+    loader.load((loader, resources) => {
+      initPixi(PIXI, getParentSize(id), resources)
+    })
   }, [])
   return <Wrapper id={id}></Wrapper>
 }

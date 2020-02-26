@@ -1,6 +1,4 @@
 import gear from "../../../images/gear.png"
-import closeUpLeaf from "../../../images/close-up-of-leaf.jpg"
-import moth from "../../../images/white-brown-and-orange-moth.jpg"
 
 const defaultBgPosition = parent => ({
   anchor: 0.5,
@@ -10,7 +8,7 @@ const defaultBgPosition = parent => ({
 
 const backgroundSettings = parent => [
   {
-    texture: closeUpLeaf,
+    texture: "closeUpLeaf",
     scale: 0.4,
     scaleAddition: 0.0001,
     random: {
@@ -21,14 +19,14 @@ const backgroundSettings = parent => [
     ...defaultBgPosition(parent),
   },
   {
-    texture: moth,
+    texture: "moth",
     scale: 0.3,
     scaleAddition: 0.00005,
     random: {
       x: Math.random() > 0.5 ? Math.random() * 50 : Math.random * -50,
       y: Math.random() > 0.5 ? Math.random() * 50 : Math.random * -50,
     },
-    lifetime: 0.35,
+    lifetime: 0.6,
     ...defaultBgPosition(parent),
   },
 ]

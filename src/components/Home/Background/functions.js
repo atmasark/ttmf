@@ -35,7 +35,14 @@ export const createSprite = (PIXI, i, parent, ticker, stage, type) => {
   })
 }
 
-export const createBackground = (PIXI, type, parent, stage, ticker) => {
+export const createBackground = (
+  PIXI,
+  type,
+  parent,
+  stage,
+  ticker,
+  resources
+) => {
   let bgSprite = null
   let count = null
   let bgSpriteScale = null
@@ -51,9 +58,11 @@ export const createBackground = (PIXI, type, parent, stage, ticker) => {
     } else {
       settings = getBackgroundSettings(parent, type)
       if (!bgSprite) {
-        bgSprite = PIXI.Sprite.from(settings.texture)
+        bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
         stage.addChild(bgSprite)
-      } else bgSprite.texture = PIXI.Texture.from(settings.texture)
+      } else {
+        bgSprite.texture = resources[settings.texture].texture
+      }
       count = 0
       bgSpriteScale = settings.scale
       bgSprite.anchor.set(settings.anchor)
