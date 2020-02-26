@@ -1,21 +1,21 @@
 import React from "react"
 import styled from "styled-components"
 
-import Background from "./Home/Background"
-import Content from "./Home/Content"
+import Logo from "./Content/Logo"
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
-  background: #0f0f0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
 
 export default () => {
   return (
     <Wrapper>
-      <Background />
-      <Content />
+      <Logo />
     </Wrapper>
   )
 }
