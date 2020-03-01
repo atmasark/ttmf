@@ -51,11 +51,10 @@ export const createBackground = (
   ticker.add(() => {
     if (bgSprite && bgSprite.scale.x < settings.lifetime) {
       count += 0.005
-      bgSprite.scale.set((currentScale.x += settings.scaleAddition))
-      if (settings.random.x)
-        bgSprite.x = settings.x + Math.cos(count) * settings.random.x
-      if (settings.random.y)
-        bgSprite.y = settings.y + Math.cos(count) * settings.random.y
+      bgSprite.scale.set(
+        (currentScale.x += settings.scaleAddition),
+        (currentScale.y += settings.scaleAddition)
+      )
     } else {
       settings = getBackgroundSettings(parent, type)
       if (!bgSprite) {
