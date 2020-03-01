@@ -9,7 +9,6 @@ const defaultBgPosition = parent => ({
 const backgroundSettings = parent => [
   {
     texture: "closeUpLeaf",
-    scale: 0.4,
     scaleAddition: 0.0001,
     random: {
       x: Math.random() > 0.5 ? Math.random() * 50 : Math.random() * -50,
@@ -20,7 +19,6 @@ const backgroundSettings = parent => [
   },
   {
     texture: "moth",
-    scale: 0.3,
     scaleAddition: 0.00005,
     random: {
       x: Math.random() > 0.5 ? Math.random() * 50 : Math.random() * -50,

@@ -3,6 +3,7 @@ import {
   getSpriteTickerSettings,
   getBackgroundSettings,
 } from "./setup"
+import resize from "../../../utils/resize"
 
 export const createSprite = (PIXI, i, parent, ticker, stage, type) => {
   let counters = {
@@ -45,12 +46,12 @@ export const createBackground = (
 ) => {
   let bgSprite = null
   let count = null
-  let bgSpriteScale = null
+  let currentScale = null
   let settings = null
   ticker.add(() => {
     if (bgSprite && bgSprite.scale.x < settings.lifetime) {
       count += 0.005
-      bgSprite.scale.set((bgSpriteScale += settings.scaleAddition))
+      bgSprite.scale.set((currentScale.x += settings.scaleAddition))
       if (settings.random.x)
         bgSprite.x = settings.x + Math.cos(count) * settings.random.x
       if (settings.random.y)
@@ -64,12 +65,11 @@ export const createBackground = (
         bgSprite.texture = resources[settings.texture].texture
       }
       count = 0
-      bgSpriteScale = settings.scale
       bgSprite.anchor.set(settings.anchor)
+      currentScale = resize(bgSprite, parent, PIXI)
+      bgSprite.scale = currentScale
       bgSprite.x = settings.x
       bgSprite.y = settings.y
-      bgSpriteScale = settings.scale
-      bgSprite.scale.set(bgSpriteScale)
     }
   })
 }
