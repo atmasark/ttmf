@@ -28,6 +28,10 @@ const initPixi = (PIXI, parent, resources) => {
   })
   document.getElementById("canvasContainer").appendChild(renderer.view)
   let stage = new PIXI.Container()
+  let patternContainer = new PIXI.Container()
+  let bgContainer = new PIXI.Container()
+  stage.addChild(bgContainer)
+  stage.addChild(patternContainer)
 
   let hueCounter = Math.round(Math.random() * 360)
   const colorMatrix = new PIXI.filters.ColorMatrixFilter()
@@ -43,11 +47,11 @@ const initPixi = (PIXI, parent, resources) => {
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
 
-  createBackground(PIXI, type, parent, stage, ticker, resources)
+  createBackground(PIXI, type, parent, bgContainer, ticker, resources)
 
   // Create a grid of sprites
   for (let i = 0; i < getAmountOfSprites(parent); i++) {
-    createSprite(PIXI, i, parent, ticker, stage, type)
+    createSprite(PIXI, i, parent, ticker, patternContainer, type)
   }
 }
 export default () => {
