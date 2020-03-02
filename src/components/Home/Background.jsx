@@ -5,7 +5,12 @@ import { getAmountOfSprites } from "./Background/setup"
 import { createSprite, createBackground } from "./Background/functions"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import moth from "../../images/white-brown-and-orange-moth.jpg"
-import { setColorFilter, setBlurFilter } from "./Background/filters"
+import displacement from "../../images/displacement.jpg"
+import {
+  setColorFilter,
+  setDisplacementFilter,
+  setBlurFilter,
+} from "./Background/filters"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -41,6 +46,7 @@ const initPixi = (PIXI, parent, resources) => {
   ticker.start()
 
   setColorFilter(PIXI, stage, ticker)
+  setDisplacementFilter(PIXI, bgContainer, ticker, resources)
   setBlurFilter(PIXI, patternContainer, ticker)
 
   createBackground(PIXI, type, parent, bgContainer, ticker, resources)
@@ -59,6 +65,7 @@ export default () => {
     const loader = new PIXI.Loader()
     loader.add("closeUpLeaf", closeUpLeaf)
     loader.add("moth", moth)
+    loader.add("displacement", displacement)
     loader.load((loader, resources) => {
       initPixi(PIXI, getParentSize(id), resources)
     })
