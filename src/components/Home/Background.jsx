@@ -5,6 +5,7 @@ import { getAmountOfSprites } from "./Background/setup"
 import { createSprite, createBackground } from "./Background/functions"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import moth from "../../images/white-brown-and-orange-moth.jpg"
+import { setColorFilter, setBlurFilter } from "./Background/filters"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -33,19 +34,14 @@ const initPixi = (PIXI, parent, resources) => {
   stage.addChild(bgContainer)
   stage.addChild(patternContainer)
 
-  let hueCounter = Math.round(Math.random() * 360)
-  const colorMatrix = new PIXI.filters.ColorMatrixFilter()
-  stage.filters = [colorMatrix]
   let ticker = new PIXI.Ticker()
   ticker.add(() => {
     renderer.render(stage)
-    hueCounter += 0.1
-    if (hueCounter > 360) {
-      hueCounter = 0
-    }
-    colorMatrix.hue(hueCounter)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
+
+  setColorFilter(PIXI, stage, ticker)
+  setBlurFilter(PIXI, patternContainer, ticker)
 
   createBackground(PIXI, type, parent, bgContainer, ticker, resources)
 
