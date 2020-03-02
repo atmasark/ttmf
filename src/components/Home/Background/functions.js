@@ -5,7 +5,14 @@ import {
 } from "./setup"
 import resize from "../../../utils/resize"
 
-export const createSprite = (PIXI, i, parent, ticker, stage, type) => {
+export const createSprite = (
+  PIXI,
+  i,
+  parent,
+  ticker,
+  patternContainer,
+  type
+) => {
   let counters = {
     scale: 0,
     alpha: 0,
@@ -31,7 +38,7 @@ export const createSprite = (PIXI, i, parent, ticker, stage, type) => {
       sprite.x = init.x
       sprite.y = init.y
       sprite.blendMode = init.blendMode
-      stage.addChild(sprite)
+      patternContainer.addChild(sprite)
     }
   })
 }
@@ -40,7 +47,7 @@ export const createBackground = (
   PIXI,
   type,
   parent,
-  stage,
+  bgContainer,
   ticker,
   resources
 ) => {
@@ -59,7 +66,7 @@ export const createBackground = (
       settings = getBackgroundSettings(parent, type)
       if (!bgSprite) {
         bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
-        stage.addChild(bgSprite)
+        bgContainer.addChild(bgSprite)
       } else {
         bgSprite.texture = resources[settings.texture].texture
       }

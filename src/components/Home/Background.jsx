@@ -5,6 +5,12 @@ import { getAmountOfSprites } from "./Background/setup"
 import { createSprite, createBackground } from "./Background/functions"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import moth from "../../images/white-brown-and-orange-moth.jpg"
+import displacement from "../../images/displacement.jpg"
+import {
+  setColorFilter,
+  setDisplacementFilter,
+  setBlurFilter,
+} from "./Background/filters"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -28,26 +34,26 @@ const initPixi = (PIXI, parent, resources) => {
   })
   document.getElementById("canvasContainer").appendChild(renderer.view)
   let stage = new PIXI.Container()
+  let patternContainer = new PIXI.Container()
+  let bgContainer = new PIXI.Container()
+  stage.addChild(bgContainer)
+  stage.addChild(patternContainer)
 
-  let hueCounter = Math.round(Math.random() * 360)
-  const colorMatrix = new PIXI.filters.ColorMatrixFilter()
-  stage.filters = [colorMatrix]
   let ticker = new PIXI.Ticker()
   ticker.add(() => {
     renderer.render(stage)
-    hueCounter += 0.1
-    if (hueCounter > 360) {
-      hueCounter = 0
-    }
-    colorMatrix.hue(hueCounter)
   }, PIXI.UPDATE_PRIORITY.LOW)
   ticker.start()
 
-  createBackground(PIXI, type, parent, stage, ticker, resources)
+  setColorFilter(PIXI, stage, ticker)
+  setDisplacementFilter(PIXI, bgContainer, ticker, resources)
+  setBlurFilter(PIXI, patternContainer, ticker)
+
+  createBackground(PIXI, type, parent, bgContainer, ticker, resources)
 
   // Create a grid of sprites
   for (let i = 0; i < getAmountOfSprites(parent); i++) {
-    createSprite(PIXI, i, parent, ticker, stage, type)
+    createSprite(PIXI, i, parent, ticker, patternContainer, type)
   }
 }
 export default () => {
@@ -59,6 +65,7 @@ export default () => {
     const loader = new PIXI.Loader()
     loader.add("closeUpLeaf", closeUpLeaf)
     loader.add("moth", moth)
+    loader.add("displacement", displacement)
     loader.load((loader, resources) => {
       initPixi(PIXI, getParentSize(id), resources)
     })

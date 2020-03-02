@@ -39,7 +39,7 @@ export const getSpriteInitSettings = (PIXI, i, parent) => ({
     },
     x: (i % (Math.round(parent.width / 64) + 1)) * 64 + 32,
     y: Math.floor(i / (Math.round(parent.width / 64) + 1)) * 64 + 32,
-    blendMode: PIXI.BLEND_MODES.SATURATION,
+    blendMode: PIXI.BLEND_MODES.MULTIPLY,
   },
 })
 
@@ -52,9 +52,9 @@ export const getSpriteTickerSettings = (i, counters) => ({
     rotation: i % 2 ? 0.01 : -0.01,
     scale: {
       x:
-        0.5 * Math.sin(counters.scale) > 0.25 && 0.5 * Math.sin(counters.scale),
+        0.3 * Math.sin(counters.scale) > 0.25 && 0.3 * Math.sin(counters.scale),
       y:
-        0.5 * Math.sin(counters.scale) > 0.25 && 0.5 * Math.sin(counters.scale),
+        0.3 * Math.sin(counters.scale) > 0.25 && 0.3 * Math.sin(counters.scale),
     },
     alpha: 0.035 + 0.0055 * Math.sin(counters.alpha),
   },
