@@ -52,12 +52,10 @@ export const createBackground = (
   resources
 ) => {
   let bgSprite = null
-  let count = null
   let currentScale = null
   let settings = null
   ticker.add(() => {
     if (bgSprite && bgSprite.scale.x < settings.lifetime) {
-      count += 0.005
       bgSprite.scale.set(
         (currentScale.x += settings.scaleAddition),
         (currentScale.y += settings.scaleAddition)
@@ -70,7 +68,6 @@ export const createBackground = (
       } else {
         bgSprite.texture = resources[settings.texture].texture
       }
-      count = 0
       bgSprite.anchor.set(settings.anchor)
       currentScale = resize(bgSprite, parent, PIXI)
       bgSprite.scale = currentScale
