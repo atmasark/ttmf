@@ -49,25 +49,53 @@ export const createBackground = (
   parent,
   bgContainer,
   ticker,
-  resources
+  resources,
+  curtain
 ) => {
   let bgSprite = null
   let currentScale = null
   let settings = null
+  let CIP = false
+  let OIP = false
   ticker.add(() => {
-    if (bgSprite && bgSprite.scale.x < settings.lifetime) {
+    if (bgSprite) {
       bgSprite.scale.set(
         (currentScale.x += settings.scaleAddition),
         (currentScale.y += settings.scaleAddition)
       )
-    } else {
-      settings = getBackgroundSettings(parent, type)
-      if (!bgSprite) {
+    }
+    if (bgSprite && bgSprite.scale.x >= settings.lifetime && !CIP && !OIP) {
+      CIP = true
+    }
+    if (CIP) {
+      if (curtain.alpha < 1) {
+        curtain.alpha += 0.01
+      } else {
+        CIP = false
+        OIP = true
+        bgSprite.destroy()
+        settings = getBackgroundSettings(parent, type)
         bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
         bgContainer.addChild(bgSprite)
-      } else {
-        bgSprite.texture = resources[settings.texture].texture
+        bgSprite.anchor.set(settings.anchor)
+        currentScale = resize(bgSprite, parent, PIXI)
+        bgSprite.scale = currentScale
+        bgSprite.x = settings.x
+        bgSprite.y = settings.y
       }
+    }
+    if (OIP) {
+      if (curtain.alpha > 0) {
+        curtain.alpha -= 0.01
+      } else {
+        OIP = false
+      }
+    }
+
+    if (!bgSprite) {
+      settings = getBackgroundSettings(parent, type)
+      bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
+      bgContainer.addChild(bgSprite)
       bgSprite.anchor.set(settings.anchor)
       currentScale = resize(bgSprite, parent, PIXI)
       bgSprite.scale = currentScale
@@ -75,4 +103,16 @@ export const createBackground = (
       bgSprite.y = settings.y
     }
   })
+}
+
+export const createCurtain = (PIXI, parent, curtainContainer, ticker) => {
+  const curtain = new PIXI.Graphics()
+
+  // Rectangle
+  curtain.beginFill(0x000000)
+  curtain.drawRect(0, 0, parent.width, parent.height)
+  curtain.endFill()
+  curtain.alpha = 0
+  curtainContainer.addChild(curtain)
+  return curtain
 }

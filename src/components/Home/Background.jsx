@@ -2,7 +2,11 @@ import React, { useEffect } from "react"
 import styled from "styled-components"
 import getParentSize from "../../utils/getParentSize"
 import { getAmountOfSprites } from "./Background/setup"
-import { createSprite, createBackground } from "./Background/functions"
+import {
+  createSprite,
+  createBackground,
+  createCurtain,
+} from "./Background/functions"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import moth from "../../images/white-brown-and-orange-moth.jpg"
 import displacement from "../../images/displacement.jpg"
@@ -36,8 +40,10 @@ const initPixi = (PIXI, parent, resources) => {
   let stage = new PIXI.Container()
   let patternContainer = new PIXI.Container()
   let bgContainer = new PIXI.Container()
+  let curtainContainer = new PIXI.Container()
   stage.addChild(bgContainer)
   stage.addChild(patternContainer)
+  stage.addChild(curtainContainer)
 
   let ticker = new PIXI.Ticker()
   ticker.add(() => {
@@ -49,7 +55,8 @@ const initPixi = (PIXI, parent, resources) => {
   setDisplacementFilter(PIXI, bgContainer, ticker, resources)
   setBlurFilter(PIXI, patternContainer, ticker)
 
-  createBackground(PIXI, type, parent, bgContainer, ticker, resources)
+  const curtain = createCurtain(PIXI, parent, curtainContainer, ticker)
+  createBackground(PIXI, type, parent, bgContainer, ticker, resources, curtain)
 
   // Create a grid of sprites
   for (let i = 0; i < getAmountOfSprites(parent); i++) {
