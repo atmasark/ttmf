@@ -55,8 +55,8 @@ export const createBackground = (
   let bgSprite = null
   let currentScale = null
   let settings = null
-  let CIP = false
-  let OIP = false
+  let closingInProgress = false
+  let openingInProgress = false
   ticker.add(() => {
     if (bgSprite) {
       bgSprite.scale.set(
@@ -64,15 +64,20 @@ export const createBackground = (
         (currentScale.y += settings.scaleAddition)
       )
     }
-    if (bgSprite && bgSprite.scale.x >= settings.lifetime && !CIP && !OIP) {
-      CIP = true
+    if (
+      bgSprite &&
+      bgSprite.scale.x >= settings.lifetime &&
+      !closingInProgress &&
+      !openingInProgress
+    ) {
+      closingInProgress = true
     }
-    if (CIP) {
+    if (closingInProgress) {
       if (curtain.alpha < 1) {
         curtain.alpha += 0.01
       } else {
-        CIP = false
-        OIP = true
+        closingInProgress = false
+        openingInProgress = true
         bgSprite.destroy()
         settings = getBackgroundSettings(parent, type)
         bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
@@ -84,11 +89,11 @@ export const createBackground = (
         bgSprite.y = settings.y
       }
     }
-    if (OIP) {
+    if (openingInProgress) {
       if (curtain.alpha > 0) {
         curtain.alpha -= 0.01
       } else {
-        OIP = false
+        openingInProgress = false
       }
     }
 
