@@ -6,6 +6,18 @@ const defaultBgPosition = parent => ({
   y: parent.height / 2,
 })
 
+export const randomizeBgOrder = () => {
+  const orderArr = Array.from(
+    { length: backgroundSettings.length },
+    (v, i) => i
+  )
+  orderArr.forEach((value, i) => {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[orderArr[i], orderArr[j]] = [orderArr[j], orderArr[i]]
+  })
+  return orderArr
+}
+
 const backgroundSettings = parent => [
   {
     texture: "closeUpLeaf",
