@@ -2,6 +2,7 @@ import {
   getSpriteInitSettings,
   getSpriteTickerSettings,
   getBackgroundSettings,
+  randomizeBgOrder,
 } from "./setup"
 import resize from "../../../utils/resize"
 
@@ -52,6 +53,8 @@ export const createBackground = (
   resources,
   curtain
 ) => {
+  const bgArray = randomizeBgOrder()
+  let currentBgIndex = 0
   let bgSprite = null
   let currentScale = null
   let settings = null
@@ -79,7 +82,9 @@ export const createBackground = (
         closingInProgress = false
         openingInProgress = true
         bgSprite.destroy()
-        settings = getBackgroundSettings(parent, type)
+        settings = getBackgroundSettings(parent, bgArray[currentBgIndex])
+        currentBgIndex++
+        if (currentBgIndex >= bgArray.length) currentBgIndex = 0
         bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
         bgContainer.addChild(bgSprite)
         bgSprite.anchor.set(settings.anchor)
@@ -98,7 +103,9 @@ export const createBackground = (
     }
 
     if (!bgSprite) {
-      settings = getBackgroundSettings(parent, type)
+      settings = getBackgroundSettings(parent, bgArray[currentBgIndex])
+      currentBgIndex++
+      if (currentBgIndex >= bgArray.length) currentBgIndex = 0
       bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
       bgContainer.addChild(bgSprite)
       bgSprite.anchor.set(settings.anchor)
