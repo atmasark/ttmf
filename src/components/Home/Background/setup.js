@@ -19,6 +19,12 @@ const backgroundSettings = parent => [
     lifetime: 0.6,
     ...defaultBgPosition(parent),
   },
+  {
+    texture: "butterfly",
+    scaleAddition: 0.00005,
+    lifetime: 0.6,
+    ...defaultBgPosition(parent),
+  },
 ]
 
 export const getBackgroundSettings = parent =>
