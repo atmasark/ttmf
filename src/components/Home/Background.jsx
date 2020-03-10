@@ -9,6 +9,7 @@ import {
 } from "./Background/functions"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import moth from "../../images/white-brown-and-orange-moth.jpg"
+import butterfly from "../../images/butterfly.jpg"
 import displacement from "../../images/displacement.jpg"
 import {
   setColorFilter,
@@ -72,6 +73,7 @@ export default () => {
     const loader = new PIXI.Loader()
     loader.add("closeUpLeaf", closeUpLeaf)
     loader.add("moth", moth)
+    loader.add("butterfly", butterfly)
     loader.add("displacement", displacement)
     loader.load((loader, resources) => {
       initPixi(PIXI, getParentSize(id), resources)

@@ -6,25 +6,40 @@ const defaultBgPosition = parent => ({
   y: parent.height / 2,
 })
 
-const backgroundSettings = parent => [
+export const randomizeBgOrder = () => {
+  const orderArr = Array.from(
+    { length: backgroundSettings.length },
+    (v, i) => i
+  )
+  orderArr.forEach((value, i) => {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[orderArr[i], orderArr[j]] = [orderArr[j], orderArr[i]]
+  })
+  return orderArr
+}
+
+const backgroundSettings = [
   {
     texture: "closeUpLeaf",
     scaleAddition: 0.0001,
     lifetime: 0.8,
-    ...defaultBgPosition(parent),
   },
   {
     texture: "moth",
     scaleAddition: 0.00005,
     lifetime: 0.6,
-    ...defaultBgPosition(parent),
+  },
+  {
+    texture: "butterfly",
+    scaleAddition: 0.00001,
+    lifetime: 0.7,
   },
 ]
 
-export const getBackgroundSettings = parent =>
-  backgroundSettings(parent)[
-    Math.floor(Math.random() * backgroundSettings(parent).length)
-  ]
+export const getBackgroundSettings = (parent, index) => ({
+  ...backgroundSettings[index],
+  ...defaultBgPosition(parent),
+})
 
 export const getAmountOfSprites = parent =>
   (parent.height / 64 + 1) * (parent.width / 64 + 1)
