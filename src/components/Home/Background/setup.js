@@ -21,18 +21,18 @@ export const randomizeBgOrder = () => {
 const backgroundSettings = [
   {
     texture: "closeUpLeaf",
-    scaleAddition: 0.00009,
-    lifetime: 0.4,
+    scaleAddition: 0.0001,
+    lifetime: 0.8,
   },
   {
     texture: "moth",
-    scaleAddition: 0.00009,
-    lifetime: 0.3,
+    scaleAddition: 0.00005,
+    lifetime: 0.6,
   },
   {
     texture: "butterfly",
-    scaleAddition: 0.00009,
-    lifetime: 0.3,
+    scaleAddition: 0.00001,
+    lifetime: 0.7,
   },
 ]
 
