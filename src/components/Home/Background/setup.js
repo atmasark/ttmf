@@ -31,8 +31,23 @@ const backgroundSettings = [
   },
   {
     texture: "butterfly",
-    scaleAddition: 0.00001,
-    lifetime: 0.7,
+    scaleAddition: 0.0001,
+    lifetime: 0.6,
+  },
+  {
+    texture: "moss",
+    scaleAddition: 0.0001,
+    lifetime: 0.8,
+  },
+  {
+    texture: "mushroom",
+    scaleAddition: 0.0001,
+    lifetime: 0.8,
+  },
+  {
+    texture: "acorn",
+    scaleAddition: 0.0001,
+    lifetime: 0.8,
   },
 ]
 

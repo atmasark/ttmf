@@ -11,6 +11,10 @@ import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import moth from "../../images/white-brown-and-orange-moth.jpg"
 import butterfly from "../../images/butterfly.jpg"
 import displacement from "../../images/displacement.jpg"
+import moss from "../../images/moss.jpg"
+import mushroom from "../../images/mushroom.jpg"
+import acorn from "../../images/acorn.jpg"
+
 import {
   setColorFilter,
   setDisplacementFilter,
@@ -74,6 +78,9 @@ export default () => {
     loader.add("closeUpLeaf", closeUpLeaf)
     loader.add("moth", moth)
     loader.add("butterfly", butterfly)
+    loader.add("moss", moss)
+    loader.add("acorn", acorn)
+    loader.add("mushroom", mushroom)
     loader.add("displacement", displacement)
     loader.load((loader, resources) => {
       initPixi(PIXI, getParentSize(id), resources)
