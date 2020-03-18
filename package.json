@@ -1,9 +1,9 @@
 {
-  "name": "the-trippy-motherfuckers",
+  "name": "ttmf",
   "private": true,
-  "description": "The trippy website for The Trippy Motherfuckers",
+  "description": "Website for the project TTMF",
   "version": "0.1.0",
-  "author": "The Trippy Motherfuckers",
+  "author": "atmasark",
   "dependencies": {
     "gatsby": "^2.19.17",
     "gatsby-image": "^2.2.41",
