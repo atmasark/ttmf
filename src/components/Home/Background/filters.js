@@ -32,6 +32,11 @@ export const setDisplacementFilter = (PIXI, element, ticker, resources) => {
 }
 
 export const setBlurFilter = (PIXI, element, ticker) => {
-  const blurFilter1 = new PIXI.filters.BlurFilter()
-  element.filters = [blurFilter1]
+  const blurFilter = new PIXI.filters.BlurFilter()
+  element.filters = [blurFilter]
+  let blurCount = 0
+  ticker.add(() => {
+    blurCount += 0.005
+    blurFilter.blur = 10 + 5 * Math.cos(blurCount)
+  })
 }
