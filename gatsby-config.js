@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `The Trippy Motherfuckers`,
-    description: `Trippy website of The Trippy Motherfuckers`,
-    author: `The Trippy Motherfuckers`,
+    title: `Project TTMF`,
+    description: `Project TTMF`,
+    author: `atmasark`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
