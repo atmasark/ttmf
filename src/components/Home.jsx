@@ -2,7 +2,6 @@ import React from "react"
 import styled from "styled-components"
 
 import Background from "./Home/Background"
-import Content from "./Home/Content"
 
 const Wrapper = styled.div`
   width: 100%;
@@ -15,7 +14,6 @@ export default () => {
   return (
     <Wrapper>
       <Background />
-      <Content />
     </Wrapper>
   )
 }
