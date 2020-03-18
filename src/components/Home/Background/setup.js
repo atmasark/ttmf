@@ -37,12 +37,12 @@ const backgroundSettings = [
   {
     texture: "snail",
     scaleAddition: 0.0001,
-    lifetime: 0.8,
+    lifetime: 0.6,
   },
   {
     texture: "liverMoss",
-    scaleAddition: 0.0001,
-    lifetime: 0.8,
+    scaleAddition: 0.00005,
+    lifetime: 0.5,
   },
 ]
 
