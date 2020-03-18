@@ -1,23 +1,22 @@
 <h1 align="center">
-  The Trippy Motherfuckers
+  Project TTMF
 </h1>
 
-This is the codebase of The Trippy Motherfuckers' website.
-The application is using Gatsby.js and styled-components, and is intended to be as trippy as possible. Happy coding!
+This is a Gatsby.js application which uses PixiJs to render WebGL content. The website is intended to be used as sort of a screensaver, which will show its true self when combined with a right amount of some sweet elevator tunes.
 
 ## 🚀 Quick start
 
 1. **Clone this repository**
 
    Clone this repository
-   `git clone https://github.com/atmasark/the-trippy-motherfuckers`
+   `git clone https://github.com/atmasark/ttmf`
 
 2. **Install dependencies**
 
    Navigate into the main directory and run the following command to install all dependencies.
 
    ```shell
-   cd the-trippy-motherfuckers/
+   cd ttmf/
    npm install
    ```
 
@@ -43,7 +42,7 @@ The application is using Gatsby.js and styled-components, and is intended to be 
 
    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
 
-   Open the `the-trippy-motherfuckers` directory in your code editor of choice and edit `src/components/Home.jsx`. Save your changes and the browser will update in real time!
+   Open the `ttmf` directory in your code editor of choice and edit `src/components/Home.jsx`. Save your changes and the browser will update in real time!
 
 ## 🧐 What's inside?
 
