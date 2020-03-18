@@ -54,7 +54,7 @@ const initPixi = (PIXI, parent, resources) => {
   setBlurFilter(PIXI, patternContainer, ticker)
 
   const curtain = createCurtain(PIXI, parent, curtainContainer, ticker)
-  createBackground(PIXI, type, parent, bgContainer, ticker, resources, curtain)
+  createBackground(PIXI, parent, bgContainer, ticker, resources, curtain)
 
   // Create a grid of sprites
   for (let i = 0; i < getAmountOfSprites(parent); i++) {

@@ -46,7 +46,6 @@ export const createSprite = (
 
 export const createBackground = (
   PIXI,
-  type,
   parent,
   bgContainer,
   ticker,
