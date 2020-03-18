@@ -9,12 +9,10 @@ import {
 } from "./Background/functions"
 import closeUpLeaf from "../../images/close-up-of-leaf.jpg"
 import moth from "../../images/white-brown-and-orange-moth.jpg"
-import butterfly from "../../images/butterfly.jpg"
 import displacement from "../../images/displacement.jpg"
 import moss from "../../images/moss.jpg"
-import mushroom from "../../images/mushroom.jpg"
-import acorn from "../../images/acorn.jpg"
-
+import snail from "../../images/snail.jpg"
+import liverMoss from "../../images/liver-moss.jpg"
 import {
   setColorFilter,
   setDisplacementFilter,
@@ -77,10 +75,9 @@ export default () => {
     const loader = new PIXI.Loader()
     loader.add("closeUpLeaf", closeUpLeaf)
     loader.add("moth", moth)
-    loader.add("butterfly", butterfly)
     loader.add("moss", moss)
-    loader.add("acorn", acorn)
-    loader.add("mushroom", mushroom)
+    loader.add("snail", snail)
+    loader.add("liverMoss", liverMoss)
     loader.add("displacement", displacement)
     loader.load((loader, resources) => {
       initPixi(PIXI, getParentSize(id), resources)
