@@ -49,6 +49,9 @@ const initPixi = (PIXI, parent, resources) => {
 
     renderer.view.style.width = w + "px"
     renderer.view.style.height = h + "px"
+
+    stage.position.set(w / 2, h / 2)
+    stage.pivot.set(w / 2, h / 2)
   })
 
   let ticker = new PIXI.Ticker()
