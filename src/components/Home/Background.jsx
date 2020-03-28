@@ -29,7 +29,7 @@ const initPixi = (PIXI, parent, resources) => {
   let renderer = new PIXI.Renderer({
     width: parent.width,
     height: parent.height,
-    autoResize: true,
+    autoDensity: true,
     forceFXAA: true,
     powerPreference: "high-performance",
     transparent: true,
@@ -42,6 +42,17 @@ const initPixi = (PIXI, parent, resources) => {
   stage.addChild(bgContainer)
   stage.addChild(patternContainer)
   stage.addChild(curtainContainer)
+
+  window.addEventListener("resize", () => {
+    const w = window.innerWidth
+    const h = window.innerHeight
+
+    renderer.view.style.width = w + "px"
+    renderer.view.style.height = h + "px"
+
+    stage.position.set(w / 2, h / 2)
+    stage.pivot.set(w / 2, h / 2)
+  })
 
   let ticker = new PIXI.Ticker()
   ticker.add(() => {

@@ -59,22 +59,11 @@ export const createBackground = (
   let settings = null
   let closingInProgress = false
   let openingInProgress = false
+  window.addEventListener("resize", () => {
+    closingInProgress = true
+  })
   ticker.add(() => {
-    if (bgSprite) {
-      bgSprite.scale.set(
-        (currentScale.x += settings.scaleAddition),
-        (currentScale.y += settings.scaleAddition)
-      )
-    }
-    if (
-      bgSprite &&
-      bgSprite.scale.x >= settings.lifetime &&
-      !closingInProgress &&
-      !openingInProgress
-    ) {
-      closingInProgress = true
-    }
-    if (closingInProgress) {
+    if (closingInProgress && !openingInProgress) {
       if (curtain.alpha < 1) {
         curtain.alpha += 0.01
       } else {
@@ -92,6 +81,20 @@ export const createBackground = (
         bgSprite.x = settings.x
         bgSprite.y = settings.y
       }
+    }
+    if (bgSprite) {
+      bgSprite.scale.set(
+        (currentScale.x += settings.scaleAddition),
+        (currentScale.y += settings.scaleAddition)
+      )
+    }
+    if (
+      bgSprite &&
+      bgSprite.scale.x >= settings.lifetime &&
+      !closingInProgress &&
+      !openingInProgress
+    ) {
+      closingInProgress = true
     }
     if (openingInProgress) {
       if (curtain.alpha > 0) {
