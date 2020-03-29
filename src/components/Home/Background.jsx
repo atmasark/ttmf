@@ -24,8 +24,9 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const initPixi = (PIXI, parent, resources) => {
+const initPixi = (PIXI, resources, id) => {
   let type = "default"
+  const parent = getParentSize(id)
   let renderer = new PIXI.Renderer({
     width: parent.width,
     height: parent.height,
@@ -44,14 +45,11 @@ const initPixi = (PIXI, parent, resources) => {
   stage.addChild(curtainContainer)
 
   window.addEventListener("resize", () => {
-    const w = window.innerWidth
-    const h = window.innerHeight
+    const { width, height } = getParentSize(id)
+    renderer.resize(width, height)
 
-    renderer.view.style.width = w + "px"
-    renderer.view.style.height = h + "px"
-
-    stage.position.set(w / 2, h / 2)
-    stage.pivot.set(w / 2, h / 2)
+    stage.position.set(width / 2, height / 2)
+    stage.pivot.set(width / 2, height / 2)
   })
 
   let ticker = new PIXI.Ticker()
@@ -80,7 +78,7 @@ export default () => {
     const PIXI = require("pixi.js")
     const loader = loadImages(PIXI)
     loader.load((loader, resources) => {
-      initPixi(PIXI, getParentSize(id), resources)
+      initPixi(PIXI, resources, id)
     })
   }, [])
   return <Wrapper id={id}></Wrapper>
