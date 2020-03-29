@@ -24,7 +24,6 @@ const Wrapper = styled.div`
 `
 
 const initPixi = (PIXI, resources, id) => {
-  let type = "default"
   const parent = getParentSize(id)
   let renderer = new PIXI.Renderer({
     width: parent.width,
@@ -61,13 +60,13 @@ const initPixi = (PIXI, resources, id) => {
   setDisplacementFilter(PIXI, bgContainer, ticker, resources)
   setBlurFilter(PIXI, patternContainer, ticker)
 
-  const curtain = createCurtain(PIXI, parent, curtainContainer, ticker)
-  createBackground(PIXI, parent, bgContainer, ticker, resources, curtain)
+  const curtain = createCurtain(PIXI, curtainContainer, id)
+  createBackground(PIXI, bgContainer, ticker, resources, curtain, id)
 
-  // Create a grid of sprites
-  for (let i = 0; i < getAmountOfSprites(parent); i++) {
-    createSprite(PIXI, i, parent, ticker, patternContainer, type)
-  }
+  // // Create a grid of sprites
+  // for (let i = 0; i < getAmountOfSprites(parent); i++) {
+  //   createSprite(PIXI, i, parent, ticker, patternContainer, type)
+  // }
 }
 export default () => {
   const id = "canvasContainer"

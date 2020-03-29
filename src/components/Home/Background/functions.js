@@ -5,6 +5,7 @@ import {
   randomizeBgOrder,
 } from "./setup"
 import resize from "../../../utils/resize"
+import getParentSize from "../../../utils/getParentSize"
 
 export const createSprite = (
   PIXI,
@@ -46,11 +47,11 @@ export const createSprite = (
 
 export const createBackground = (
   PIXI,
-  parent,
   bgContainer,
   ticker,
   resources,
-  curtain
+  curtain,
+  id
 ) => {
   const bgArray = randomizeBgOrder()
   let currentBgIndex = 0
@@ -70,13 +71,16 @@ export const createBackground = (
         closingInProgress = false
         openingInProgress = true
         bgSprite.destroy()
-        settings = getBackgroundSettings(parent, bgArray[currentBgIndex])
+        settings = getBackgroundSettings(
+          getParentSize(id),
+          bgArray[currentBgIndex]
+        )
         currentBgIndex++
         if (currentBgIndex >= bgArray.length) currentBgIndex = 0
         bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
         bgContainer.addChild(bgSprite)
         bgSprite.anchor.set(settings.anchor)
-        currentScale = resize(bgSprite, parent, PIXI)
+        currentScale = resize(bgSprite, getParentSize(id), PIXI)
         bgSprite.scale = currentScale
         bgSprite.x = settings.x
         bgSprite.y = settings.y
@@ -105,13 +109,16 @@ export const createBackground = (
     }
 
     if (!bgSprite) {
-      settings = getBackgroundSettings(parent, bgArray[currentBgIndex])
+      settings = getBackgroundSettings(
+        getParentSize(id),
+        bgArray[currentBgIndex]
+      )
       currentBgIndex++
       if (currentBgIndex >= bgArray.length) currentBgIndex = 0
       bgSprite = PIXI.Sprite.from(resources[settings.texture].texture)
       bgContainer.addChild(bgSprite)
       bgSprite.anchor.set(settings.anchor)
-      currentScale = resize(bgSprite, parent, PIXI)
+      currentScale = resize(bgSprite, getParentSize(id), PIXI)
       bgSprite.scale = currentScale
       bgSprite.x = settings.x
       bgSprite.y = settings.y
@@ -119,10 +126,9 @@ export const createBackground = (
   })
 }
 
-export const createCurtain = (PIXI, parent, curtainContainer, ticker) => {
+export const createCurtain = (PIXI, curtainContainer, id) => {
+  let parent = getParentSize(id)
   const curtain = new PIXI.Graphics()
-
-  // Rectangle
   curtain.beginFill(0x000000)
   curtain.drawRect(0, 0, parent.width, parent.height)
   curtain.endFill()
