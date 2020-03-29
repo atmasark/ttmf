@@ -128,6 +128,14 @@ export const createBackground = (
 
 export const createCurtain = (PIXI, curtainContainer, id) => {
   let parent = getParentSize(id)
+  window.addEventListener("resize", () => {
+    parent = getParentSize(id)
+    curtain.clear()
+    curtain.beginFill(0x000000)
+    curtain.drawRect(0, 0, parent.width, parent.height)
+    curtain.endFill()
+  })
+
   const curtain = new PIXI.Graphics()
   curtain.beginFill(0x000000)
   curtain.drawRect(0, 0, parent.width, parent.height)
