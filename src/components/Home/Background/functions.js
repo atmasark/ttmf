@@ -62,6 +62,8 @@ export const createBackground = (
   let openingInProgress = false
   window.addEventListener("resize", () => {
     closingInProgress = true
+    bgSprite.x = getParentSize(id).width / 2
+    bgSprite.y = getParentSize(id).height / 2
   })
   ticker.add(() => {
     if (closingInProgress && !openingInProgress) {
