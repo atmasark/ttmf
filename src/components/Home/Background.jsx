@@ -15,17 +15,17 @@ import {
 } from "./Background/filters"
 
 const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  position: absolute;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `
 
-const initPixi = (PIXI, parent, resources) => {
-  let type = "default"
+const initPixi = (PIXI, resources, id) => {
+  const type = "default"
+  const parent = getParentSize(id)
   let renderer = new PIXI.Renderer({
     width: parent.width,
     height: parent.height,
@@ -44,14 +44,11 @@ const initPixi = (PIXI, parent, resources) => {
   stage.addChild(curtainContainer)
 
   window.addEventListener("resize", () => {
-    const w = window.innerWidth
-    const h = window.innerHeight
+    const { width, height } = getParentSize(id)
+    renderer.resize(width, height)
 
-    renderer.view.style.width = w + "px"
-    renderer.view.style.height = h + "px"
-
-    stage.position.set(w / 2, h / 2)
-    stage.pivot.set(w / 2, h / 2)
+    stage.position.set(width / 2, height / 2)
+    stage.pivot.set(width / 2, height / 2)
   })
 
   let ticker = new PIXI.Ticker()
@@ -64,13 +61,18 @@ const initPixi = (PIXI, parent, resources) => {
   setDisplacementFilter(PIXI, bgContainer, ticker, resources)
   setBlurFilter(PIXI, patternContainer, ticker)
 
-  const curtain = createCurtain(PIXI, parent, curtainContainer, ticker)
-  createBackground(PIXI, parent, bgContainer, ticker, resources, curtain)
+  const curtain = createCurtain(PIXI, curtainContainer, id)
+  createBackground(PIXI, bgContainer, ticker, resources, curtain, id)
 
-  // Create a grid of sprites
-  for (let i = 0; i < getAmountOfSprites(parent); i++) {
-    createSprite(PIXI, i, parent, ticker, patternContainer, type)
+  for (let i = 0; i < getAmountOfSprites(getParentSize(id)); i++) {
+    createSprite(PIXI, i, ticker, patternContainer, type, id)
   }
+
+  window.addEventListener("resize", () => {
+    for (let i = 0; i < getAmountOfSprites(getParentSize(id)); i++) {
+      createSprite(PIXI, i, ticker, patternContainer, type, id)
+    }
+  })
 }
 export default () => {
   const id = "canvasContainer"
@@ -80,7 +82,7 @@ export default () => {
     const PIXI = require("pixi.js")
     const loader = loadImages(PIXI)
     loader.load((loader, resources) => {
-      initPixi(PIXI, getParentSize(id), resources)
+      initPixi(PIXI, resources, id)
     })
   }, [])
   return <Wrapper id={id}></Wrapper>
