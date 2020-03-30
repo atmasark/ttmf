@@ -64,10 +64,15 @@ const initPixi = (PIXI, resources, id) => {
   const curtain = createCurtain(PIXI, curtainContainer, id)
   createBackground(PIXI, bgContainer, ticker, resources, curtain, id)
 
-  // Create a grid of sprites
   for (let i = 0; i < getAmountOfSprites(getParentSize(id)); i++) {
     createSprite(PIXI, i, ticker, patternContainer, type, id)
   }
+
+  window.addEventListener("resize", () => {
+    for (let i = 0; i < getAmountOfSprites(getParentSize(id)); i++) {
+      createSprite(PIXI, i, ticker, patternContainer, type, id)
+    }
+  })
 }
 export default () => {
   const id = "canvasContainer"
