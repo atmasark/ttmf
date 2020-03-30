@@ -24,6 +24,7 @@ const Wrapper = styled.div`
 `
 
 const initPixi = (PIXI, resources, id) => {
+  const type = "default"
   const parent = getParentSize(id)
   let renderer = new PIXI.Renderer({
     width: parent.width,
@@ -63,10 +64,10 @@ const initPixi = (PIXI, resources, id) => {
   const curtain = createCurtain(PIXI, curtainContainer, id)
   createBackground(PIXI, bgContainer, ticker, resources, curtain, id)
 
-  // // Create a grid of sprites
-  // for (let i = 0; i < getAmountOfSprites(parent); i++) {
-  //   createSprite(PIXI, i, parent, ticker, patternContainer, type)
-  // }
+  // Create a grid of sprites
+  for (let i = 0; i < getAmountOfSprites(getParentSize(id)); i++) {
+    createSprite(PIXI, i, ticker, patternContainer, type, id)
+  }
 }
 export default () => {
   const id = "canvasContainer"
