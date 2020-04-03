@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import getParentSize from "../../utils/getParentSize"
 import { getAmountOfSprites } from "./Background/setup"
@@ -21,6 +21,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`
+const Text = styled.p`
+  color: white;
 `
 
 const initPixi = (PIXI, resources, id) => {
@@ -75,6 +78,7 @@ const initPixi = (PIXI, resources, id) => {
   })
 }
 export default () => {
+  const [loaded, setLoaded] = useState(false)
   const id = "canvasContainer"
   useEffect(() => {
     // Pixi imported here to prevent
@@ -82,8 +86,9 @@ export default () => {
     const PIXI = require("pixi.js")
     const loader = loadImages(PIXI)
     loader.load((loader, resources) => {
+      setLoaded(true)
       initPixi(PIXI, resources, id)
     })
   }, [])
-  return <Wrapper id={id}></Wrapper>
+  return <Wrapper id={id}>{!loaded && <Text>Loading...</Text>}</Wrapper>
 }
