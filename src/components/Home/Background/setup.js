@@ -4,6 +4,7 @@ const defaultBgPosition = parent => ({
   anchor: 0.5,
   x: parent.width / 2,
   y: parent.height / 2,
+  lifetime: 0.2,
 })
 
 export const randomizeBgOrder = () => {
@@ -22,27 +23,22 @@ const backgroundSettings = [
   {
     texture: "closeUpLeaf",
     scaleAddition: 0.0001,
-    lifetime: 0.8,
   },
   {
     texture: "moth",
     scaleAddition: 0.00005,
-    lifetime: 0.6,
   },
   {
     texture: "moss",
     scaleAddition: 0.0001,
-    lifetime: 0.8,
   },
   {
     texture: "snail",
     scaleAddition: 0.0001,
-    lifetime: 0.6,
   },
   {
     texture: "liverMoss",
     scaleAddition: 0.00005,
-    lifetime: 0.5,
   },
 ]
 
