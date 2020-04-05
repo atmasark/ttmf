@@ -52,6 +52,7 @@ export const createBackground = (
   let settings = null
   let closingInProgress = false
   let openingInProgress = false
+  let age = 0
   window.addEventListener("resize", () => {
     closingInProgress = true
     bgSprite.x = getParentSize(id).width / 2
@@ -64,6 +65,7 @@ export const createBackground = (
       } else {
         closingInProgress = false
         openingInProgress = true
+        age = 0
         bgSprite.destroy()
         settings = getBackgroundSettings(
           getParentSize(id),
@@ -81,6 +83,7 @@ export const createBackground = (
       }
     }
     if (bgSprite) {
+      age += settings.scaleAddition
       bgSprite.scale.set(
         (currentScale.x += settings.scaleAddition),
         (currentScale.y += settings.scaleAddition)
@@ -88,7 +91,7 @@ export const createBackground = (
     }
     if (
       bgSprite &&
-      bgSprite.scale.x >= settings.lifetime &&
+      age >= settings.lifetime &&
       !closingInProgress &&
       !openingInProgress
     ) {
