@@ -40,6 +40,18 @@ const backgroundSettings = [
     texture: "liverMoss",
     scaleAddition: 0.00005,
   },
+  {
+    texture: "finnishForest",
+    scaleAddition: 0.0001,
+  },
+  {
+    texture: "closeUpTree",
+    scaleAddition: 0.00006,
+  },
+  {
+    texture: "naturalMoss",
+    scaleAddition: 0.0001,
+  },
 ]
 
 export const getBackgroundSettings = (parent, index) => ({
